@@ -1,0 +1,7 @@
+:showtitle:
+:toc: left
+:icons: font
+
+= web hosting
+
+Some configuration I use to setup hosting for a few websites I admin.
