@@ -4,4 +4,4 @@
 
 = web hosting
 
-Some configuration I use to setup hosting for a few websites I admin.
+Some configuration I use to setup hosting for a few websites.

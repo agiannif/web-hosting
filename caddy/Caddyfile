@@ -1,0 +1,20 @@
+asoftfacade.com {
+    import snippets/Logging
+
+    reverse_proxy :2368
+
+    encode gzip
+
+    import snippets/SecurityHeaders
+}
+
+adistant.cloud {
+    import snippets/Logging
+
+    reverse_proxy :1212
+
+    encode gzip
+
+    import snippets/SecurityHeaders
+}
+
