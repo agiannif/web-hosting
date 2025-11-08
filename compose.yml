@@ -20,7 +20,7 @@ services:
       - "1212"
     volumes:
       - ./data/adistantcloud/assets:/assets
-      - ./data/adistantcloud/config:/config
+      - ./data/adistantcloud/configs:/configs
 
   asoftfacade:
     image: ghost:6-alpine
@@ -37,7 +37,7 @@ services:
       database__connection__password: ${GHOST_DATABASE_PASSWORD:?GHOST_DATABASE_PASSWORD environment variable is required}
       database__connection__database: ghost
     volumes:
-      - ./data/ghost:/var/lib/ghost/content
+      - ./data/asoftfacade/ghost:/var/lib/ghost/content
     depends_on:
       ghost-db:
         condition: service_healthy
@@ -53,7 +53,7 @@ services:
       MYSQL_PASSWORD: ${GHOST_DATABASE_PASSWORD:?GHOST_DATABASE_PASSWORD environment variable is required}
       MYSQL_DATABASE: ghost
     volumes:
-      - ./data/mysql:/var/lib/mysql
+      - ./data/asoftfacade/mysql:/var/lib/mysql
     healthcheck:
       test: mysqladmin ping -p$$MYSQL_ROOT_PASSWORD -h 127.0.0.1
       interval: 1s
