@@ -19,8 +19,8 @@ services:
     expose:
       - "1212"
     volumes:
-      ./data/adistantcloud/assets:/assets
-      ./data/adistantcloud/config:/config
+      - ./data/adistantcloud/assets:/assets
+      - ./data/adistantcloud/config:/config
 
   asoftfacade:
     image: ghost:6-alpine
