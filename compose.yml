@@ -29,39 +29,11 @@ services:
       - "2368"
     environment:
       NODE_ENV: production
-      url: https://${GHOST_DOMAIN:?GHOST_DOMAIN environment variable is required}
-      admin__url: ${GHOST_ADMIN_DOMAIN:+https://${GHOST_ADMIN_DOMAIN}}
-      database__client: mysql
-      database__connection__host: ghost-db
-      database__connection__user: ghost
-      database__connection__password: ${GHOST_DATABASE_PASSWORD:?GHOST_DATABASE_PASSWORD environment variable is required}
-      database__connection__database: ghost
+      url: https://${GHOST_DOMAIN}
+      database__client: sqlite3
+      database__connection__filename: /var/lib/ghost/content/data/ghost.db
     volumes:
       - ./data/asoftfacade/ghost:/var/lib/ghost/content
-    depends_on:
-      ghost-db:
-        condition: service_healthy
-
-  ghost-db:
-    image: mysql:8.0
-    restart: always
-    mem_limit: 180m
-    expose:
-      - "3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: ${GHOST_DATABASE_ROOT_PASSWORD:?GHOST_DATABASE_ROOT_PASSWORD environment variable is required}
-      MYSQL_USER: ghost
-      MYSQL_PASSWORD: ${GHOST_DATABASE_PASSWORD:?GHOST_DATABASE_PASSWORD environment variable is required}
-      MYSQL_DATABASE: ghost
-    volumes:
-      - ./data/asoftfacade/mysql:/var/lib/mysql
-      - ./config/asoftfacade/mysql/my.cnf:/etc/mysql/conf.d/z-low-mem.cnf:ro
-    healthcheck:
-      test: mysqladmin ping -p$$MYSQL_ROOT_PASSWORD -h 127.0.0.1
-      interval: 1s
-      start_period: 30s
-      start_interval: 10s
-      retries: 120
 
   formbee:
     image: oia123/formbee-email-only
