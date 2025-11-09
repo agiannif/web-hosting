@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://raw.githubusercontent.com/compose-spec/compose-spec/main/schema/compose-spec.json
 services:
   caddy:
@@ -12,6 +11,14 @@ services:
       - ./caddy:/etc/caddy
       - caddy_data:/data
       - caddy_config:/config
+    deploy:
+      resources:
+        limits:
+          cpus: '0.10'
+          memory: 32M
+        reservations:
+          cpus: '0.05'
+          memory: 24M
 
   adistantcloud:
     image: agiannif/adistantcloud:latest
@@ -21,6 +28,14 @@ services:
     volumes:
       - ./data/adistantcloud/assets:/assets
       - ./data/adistantcloud/configs:/configs
+    deploy:
+      resources:
+        limits:
+          cpus: '0.15'
+          memory: 96M
+        reservations:
+          cpus: '0.08'
+          memory: 64M
 
   asoftfacade:
     image: ghost:6-alpine
@@ -34,6 +49,14 @@ services:
       database__connection__filename: /var/lib/ghost/content/data/ghost.db
     volumes:
       - ./data/asoftfacade/ghost:/var/lib/ghost/content
+    deploy:
+      resources:
+        limits:
+          cpus: '0.55'
+          memory: 256M
+        reservations:
+          cpus: '0.25'
+          memory: 192M
 
   formbee:
     image: oia123/formbee-email-only
@@ -46,6 +69,14 @@ services:
       EMAIL_TO: ${GHOST_FORM_TO_EMAIL}
       SMTP_PORT: "465"
       ORIGIN: ${GHOST_DOMAIN}
+    deploy:
+      resources:
+        limits:
+          cpus: '0.08'
+          memory: 80M
+        reservations:
+          cpus: '0.04'
+          memory: 48M
 
 volumes:
   caddy_data:
