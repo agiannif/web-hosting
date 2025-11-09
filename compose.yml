@@ -45,6 +45,7 @@ services:
   ghost-db:
     image: mysql:8.0
     restart: always
+    mem_limit: 180m
     expose:
       - "3306"
     environment:
