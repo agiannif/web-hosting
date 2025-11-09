@@ -55,6 +55,7 @@ services:
       MYSQL_DATABASE: ghost
     volumes:
       - ./data/asoftfacade/mysql:/var/lib/mysql
+      - ./config/asoftfacade/mysql/my.cnf:/etc/mysql/conf.d/z-low-mem.cnf:ro
     healthcheck:
       test: mysqladmin ping -p$$MYSQL_ROOT_PASSWORD -h 127.0.0.1
       interval: 1s
