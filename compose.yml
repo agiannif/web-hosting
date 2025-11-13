@@ -14,11 +14,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.10'
-          memory: 32M
+          cpus: '0.25'
+          memory: 45M
         reservations:
-          cpus: '0.05'
-          memory: 24M
+          cpus: '0.10'
+          memory: 40M
 
   adistantcloud:
     image: agiannif/adistantcloud:latest
@@ -32,10 +32,10 @@ services:
       resources:
         limits:
           cpus: '0.15'
-          memory: 96M
+          memory: 18M
         reservations:
-          cpus: '0.08'
-          memory: 64M
+          cpus: '0.05'
+          memory: 12M
 
   asoftfacade:
     image: ghost:6-alpine
@@ -47,16 +47,17 @@ services:
       url: https://${GHOST_DOMAIN}
       database__client: sqlite3
       database__connection__filename: /var/lib/ghost/content/data/ghost.db
+      NODE_OPTIONS: "--max-old-space-size=68"
     volumes:
       - ./data/asoftfacade/ghost:/var/lib/ghost/content
     deploy:
       resources:
         limits:
-          cpus: '0.55'
-          memory: 256M
+          cpus: '0.35'
+          memory: 96M
         reservations:
-          cpus: '0.25'
-          memory: 192M
+          cpus: '0.20'
+          memory: 92M
 
   formbee:
     image: oia123/formbee-email-only
@@ -69,14 +70,15 @@ services:
       EMAIL_TO: ${GHOST_FORM_TO_EMAIL}
       SMTP_PORT: "465"
       ORIGIN: ${GHOST_DOMAIN}
+      NODE_OPTIONS: "--max-old-space-size=68"
     deploy:
       resources:
         limits:
-          cpus: '0.08'
-          memory: 80M
+          cpus: '0.25'
+          memory: 92M
         reservations:
-          cpus: '0.04'
-          memory: 48M
+          cpus: '0.10'
+          memory: 92M
 
 volumes:
   caddy_data:
