@@ -1,11 +1,23 @@
 asoftfacade.com {
     import snippets/Logging
 
-    reverse_proxy asoftfacade:2368
+    handle /skinnyform/send {
+        reverse_proxy skinnyform:3000
+    }
+
+    handle {
+        reverse_proxy asoftfacade:2368
+    }
 
     encode gzip
 
     import snippets/SecurityHeaders
+}
+
+www.asoftfacade.com {
+    import snippets/Logging
+
+    redir https://asoftfacade.com
 }
 
 adistant.cloud {
@@ -17,4 +29,3 @@ adistant.cloud {
 
     import snippets/SecurityHeaders
 }
-

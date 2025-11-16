@@ -1,4 +1,3 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/compose-spec/compose-spec/main/schema/compose-spec.json
 services:
   caddy:
     image: caddy:2-alpine
@@ -15,10 +14,10 @@ services:
       resources:
         limits:
           cpus: '0.25'
-          memory: 45M
+          memory: 128M
         reservations:
           cpus: '0.10'
-          memory: 40M
+          memory: 64M
 
   adistantcloud:
     image: agiannif/adistantcloud:latest
@@ -32,7 +31,7 @@ services:
       resources:
         limits:
           cpus: '0.15'
-          memory: 18M
+          memory: 24M
         reservations:
           cpus: '0.05'
           memory: 12M
@@ -47,38 +46,36 @@ services:
       url: https://${GHOST_DOMAIN}
       database__client: sqlite3
       database__connection__filename: /var/lib/ghost/content/data/ghost.db
-      NODE_OPTIONS: "--max-old-space-size=68"
+      NODE_OPTIONS: "--max-old-space-size=550"
     volumes:
       - ./data/asoftfacade/ghost:/var/lib/ghost/content
     deploy:
       resources:
         limits:
           cpus: '0.35'
-          memory: 96M
+          memory: 720M
         reservations:
           cpus: '0.20'
-          memory: 92M
+          memory: 540M
 
-  formbee:
-    image: oia123/formbee-email-only
+  skinnyform:
+    image: agiannif/skinnyform:latest
     expose:
       - "3000"
     environment:
-      EMAIL_PROVIDER: "smtp.gmail.com"
-      EMAIL_USER: ${GHOST_FORM_FROM_EMAIL}
-      EMAIL_PASSWORD: ${GMAIL_OAUTH2_ACCESS_TOKEN}
-      EMAIL_TO: ${GHOST_FORM_TO_EMAIL}
-      SMTP_PORT: "465"
-      ORIGIN: ${GHOST_DOMAIN}
-      NODE_OPTIONS: "--max-old-space-size=68"
+      EMAIL_USER: ${GHOST_EMAIL_USER}
+      EMAIL_TO: ${GHOST_EMAIL_TO}
+      GMAIL_CLIENT: ${GHOST_GMAIL_CLIENT}
+      GMAIL_SECRET: ${GHOST_GMAIL_SECRET}
+      GMAIL_REFRESH: ${GHOST_GMAIL_REFRESH}
     deploy:
       resources:
         limits:
-          cpus: '0.25'
-          memory: 92M
+          cpus: '0.15'
+          memory: 24M
         reservations:
-          cpus: '0.10'
-          memory: 92M
+          cpus: '0.05'
+          memory: 12M
 
 volumes:
   caddy_data:
