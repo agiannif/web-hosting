@@ -10,6 +10,7 @@ services:
       - ./caddy:/etc/caddy
       - caddy_data:/data
       - caddy_config:/config
+      - ./data/asoftfacade/ghost:/var/lib/ghost/content:ro
     deploy:
       resources:
         limits:
@@ -46,17 +47,17 @@ services:
       url: https://${GHOST_DOMAIN}
       database__client: sqlite3
       database__connection__filename: /var/lib/ghost/content/data/ghost.db
-      NODE_OPTIONS: "--max-old-space-size=550"
+      NODE_OPTIONS: "--max-old-space-size=380"
     volumes:
       - ./data/asoftfacade/ghost:/var/lib/ghost/content
     deploy:
       resources:
         limits:
           cpus: '0.35'
-          memory: 720M
+          memory: 512M
         reservations:
           cpus: '0.20'
-          memory: 540M
+          memory: 256M
 
   skinnyform:
     image: agiannif/skinnyform:latest

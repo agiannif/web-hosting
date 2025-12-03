@@ -1,23 +1,38 @@
 asoftfacade.com {
     import snippets/Logging
 
+    # Try serving images from disk, fall back to Ghost if not found
+    handle /content/images/* {
+        root * /var/lib/ghost
+
+        @notExists not file
+        handle @notExists {
+            header X-Served-By "Ghost-Direct"
+            reverse_proxy asoftfacade:2368
+        }
+
+        header Cache-Control "public, max-age=86400, must-revalidate"
+        header X-Served-By "Caddy-Direct"
+        file_server
+    }
+
+    # Skinnyform handler
     handle /skinnyform/send {
         reverse_proxy skinnyform:3000
     }
 
+    # Default Ghost handler
     handle {
         reverse_proxy asoftfacade:2368
     }
 
     encode gzip
-
     import snippets/SecurityHeaders
 }
 
 www.asoftfacade.com {
     import snippets/Logging
-
-    redir https://asoftfacade.com
+    redir https://asoftfacade.com{uri} permanent
 }
 
 adistant.cloud {
