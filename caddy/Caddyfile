@@ -38,9 +38,16 @@ www.asoftfacade.com {
 adistant.cloud {
     import snippets/Logging
 
-    reverse_proxy adistantcloud:1212
+    # Skinnyform handler
+    handle /skinnyform/send {
+        reverse_proxy skinnyform:3000
+    }
+
+    # Default adistantcloud handler
+    handle {
+        reverse_proxy adistantcloud:1212
+    }
 
     encode gzip
-
     import snippets/SecurityHeaders
 }

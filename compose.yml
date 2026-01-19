@@ -68,11 +68,11 @@ services:
       GMAIL_SECRET: ${SF_GMAIL_SECRET}
       GMAIL_REFRESH: ${SF_GMAIL_REFRESH}
       EMAIL_USER: ${SF_EMAIL_USER}
-      EMAIL_TO: ${SF_EMAIL_TO}
+      CLIENT_ORIGINS: ${SF_CLIENT_ORIGINS}
+      CLIENT_EMAILS: ${SF_CLIENT_EMAILS}
       RATE_LIMIT_WINDOW: ${SF_RATE_LIMIT_WINDOW}
       RATE_LIMIT_MAX: ${SF_RATE_LIMIT_MAX}
       BLACKLISTED_DOMAINS: ${SF_BLACKLISTED_DOMAINS}
-      ALLOWED_ORIGIN: ${SF_ALLOWED_ORIGIN}
     deploy:
       resources:
         limits:
@@ -81,6 +81,10 @@ services:
         reservations:
           cpus: '0.05'
           memory: 12M
+
+networks:
+  default:
+    enable_ipv6: true
 
 volumes:
   caddy_data:
