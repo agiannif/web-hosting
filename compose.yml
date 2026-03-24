@@ -59,6 +59,20 @@ services:
           cpus: '0.20'
           memory: 256M
 
+  gokana:
+    image: agiannif/gokana:latest
+    restart: always
+    expose:
+      - "8080"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.10'
+          memory: 16M
+        reservations:
+          cpus: '0.05'
+          memory: 8M
+
   skinnyform:
     image: agiannif/skinnyform:latest
     expose:

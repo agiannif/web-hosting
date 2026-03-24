@@ -35,6 +35,22 @@ www.asoftfacade.com {
     redir https://asoftfacade.com{uri} permanent
 }
 
+gokana.club {
+    import snippets/Logging
+
+    handle {
+        reverse_proxy gokana:8080
+    }
+
+    encode gzip
+    import snippets/SecurityHeaders
+}
+
+www.gokana.club {
+    import snippets/Logging
+    redir https://gokana.club{uri} permanent
+}
+
 adistant.cloud {
     import snippets/Logging
 
