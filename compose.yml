@@ -25,6 +25,8 @@ services:
     restart: always
     expose:
       - "1212"
+    environment:
+      GOMEMLIMIT: 20MiB
     volumes:
       - ./data/adistantcloud/assets:/assets
       - ./data/adistantcloud/configs:/configs
@@ -64,20 +66,24 @@ services:
     restart: always
     expose:
       - "8080"
+    environment:
+      GOMEMLIMIT: 20MiB
     deploy:
       resources:
         limits:
           cpus: '0.10'
-          memory: 16M
+          memory: 24M
         reservations:
           cpus: '0.05'
-          memory: 8M
+          memory: 12M
 
   skinnyform:
     image: agiannif/skinnyform:latest
+    restart: always
     expose:
       - "3000"
     environment:
+      GOMEMLIMIT: 20MiB
       GMAIL_CLIENT: ${SF_GMAIL_CLIENT}
       GMAIL_SECRET: ${SF_GMAIL_SECRET}
       GMAIL_REFRESH: ${SF_GMAIL_REFRESH}
